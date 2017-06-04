@@ -64,11 +64,11 @@ void loop() {
   sensor->Clear();
   do {
     sensor->Loop();
-    t = millis();   
+    t = millis();
   } while((t - prevTime) < 90);
-  
+
   prevTime = t;
-  
+
   nextSignal++;
   if(!*nextSignal) {
     nextSignal = message;
@@ -83,4 +83,3 @@ void loop() {
   runFeedback(sensor->Values(), feedback);
   delay(10);
 }
-
