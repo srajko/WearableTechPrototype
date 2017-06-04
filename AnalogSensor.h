@@ -6,10 +6,10 @@ class AnalogSensor : public Sensor {
   std::vector<int> history;
 public:
   AnalogSensor()
-    : Sensor("111111111")
+    : Sensor("11110000")
   {
     initialized = true;
-    values.resize(3);
+    values.resize(4);
   }
 
   void Clear() {
@@ -18,6 +18,7 @@ public:
 
   void Loop() {
     history.push_back(analogRead(A0));
+    delayMicroseconds(1000);
   }
 
   int sign(int x) {
@@ -25,8 +26,8 @@ public:
   }
   
   void UpdateValues() {
-    values[0] = analogRead(A0);
     if(history.size()) {
+      values[0] = history[history.size()-1];
       auto minElement = std::min_element(history.begin(), history.end());
       auto maxElement = std::max_element(history.begin(), history.end());
       values[1] = *maxElement - *minElement;
@@ -43,6 +44,7 @@ public:
         }
       }
       values[2] = float(crossings) / history.size();
+      values[3] = history.size();
     }
   }
 };
