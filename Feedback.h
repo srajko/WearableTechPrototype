@@ -3,6 +3,8 @@
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(5, 0);
 Adafruit_NeoPixel motors = Adafruit_NeoPixel(3, 15);
 
+const float pi = 3.14159265358979;
+
 void feedbackSetup() {
   pixels.begin();
   pixels.setBrightness(85);
@@ -40,9 +42,12 @@ void feedbackMicAnalog(const std::vector<float> &data, float &red, float &green,
   float frequency = data[2];
   float volume = data[1];
 
-  if(frequency > 0.14 && volume > 400) { red = 255; } else { red = 0; }
-  blue = volume;
-  green = frequency * 255;
+  float intensity = mapAndConstrain(volume, 0, 1024, 0, 255);
+  float hue = constrain(frequency, 0, 1);
+
+  red = intensity*fabs(sin(hue*pi));
+  green = intensity*fabs(sin((hue + 0.333)*pi));
+  blue = intensity*fabs(sin((hue + 0.666)*pi));
 
   motor = volume;
 }
@@ -65,5 +70,3 @@ void runFeedback(const std::vector<float> &data, feedbackFunction f) {
   pixels.show();
   motors.show();
 }
-
-
