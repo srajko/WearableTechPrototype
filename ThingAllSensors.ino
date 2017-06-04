@@ -10,8 +10,16 @@ const int ESP8266_LED = 5;
 
 const int sensorCount = 5;
 Sensor *sensors[sensorCount];
+feedbackFunction feedbacks[sensorCount] = {
+  feedbackNineDof,
+  feedbackLight,
+  feedbackColor,
+  feedbackNineDof,
+  feedbackMicAnalog
+};
 
 Sensor *sensor = NULL;
+feedbackFunction feedback = NULL;
 
 const char *message = "101010";
 const char *nextSignal;
@@ -40,6 +48,7 @@ void setup() {
     if(sensors[sensorIndex]->Initialized()) {
       sensor = sensors[sensorIndex];
       message = sensor->Message();
+      feedback = feedbacks[sensorIndex];
       break;
     }
   }
@@ -71,7 +80,7 @@ void loop() {
 
   sensor->UpdateValues();
   sendMessage(sensor->Values());
-  feedback(sensor->Values());
+  runFeedback(sensor->Values(), feedback);
   delay(10);
 }
 
