@@ -4,6 +4,7 @@
 #include "ColorSensor.h"
 #include "OrientationSensor.h"
 #include "AnalogSensor.h"
+#include "Feedback.h"
 
 const int ESP8266_LED = 5;
 
@@ -27,6 +28,7 @@ void setup() {
   Serial.begin(9600);
 
   WiFiSetup();
+  feedbackSetup();
 
   sensors[0] = new NineDofSensor();
   sensors[1] = new LightSensor();
@@ -69,6 +71,7 @@ void loop() {
 
   sensor->UpdateValues();
   sendMessage(sensor->Values());
+  feedback(sensor->Values());
   delay(10);
 }
 
