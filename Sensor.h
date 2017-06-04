@@ -40,6 +40,8 @@ protected:
     return initialized;
   }
   virtual void UpdateValues()=0;
+  virtual void Loop() { }
+  virtual void Clear() { }
   const char *Message() {
     return message;
   }
