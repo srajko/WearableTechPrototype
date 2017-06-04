@@ -14,7 +14,7 @@ public:
   
     initialized = tcs.begin();
     if (initialized) {
-      tcs.setInterrupt(true);      // turn on LED
+      tcs.setInterrupt(false);      // turn on LED
       values.resize(4);
     }
   }
