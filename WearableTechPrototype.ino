@@ -6,6 +6,9 @@
 #include "AnalogSensor.h"
 #include "Feedback.h"
 
+// Change this to turn feedback on or off (true or false)
+const bool feedbackEnabled = false;
+
 const int ESP8266_LED = 5;
 
 const int sensorCount = 5;
@@ -36,7 +39,9 @@ void setup() {
   Serial.begin(9600);
 
   WiFiSetup();
-  feedbackSetup();
+  if (feedbackEnabled) {
+    feedbackSetup();    
+  }
 
   sensors[0] = new NineDofSensor();
   sensors[1] = new LightSensor();
@@ -80,6 +85,8 @@ void loop() {
 
   sensor->UpdateValues();
   sendMessage(sensor->Values());
-  runFeedback(sensor->Values(), feedback);
+  if (feedbackEnabled) {
+    runFeedback(sensor->Values(), feedback);
+  }
   delay(10);
 }
