@@ -1,7 +1,10 @@
 #include <Adafruit_NeoPixel.h>
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(5, 0);
-Adafruit_NeoPixel motors = Adafruit_NeoPixel(3, 15);
+const int numberOfPixels = 24;
+const int numberOfMotors = 3;
+
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(numberOfPixels, 0);
+Adafruit_NeoPixel motors = Adafruit_NeoPixel(numberOfMotors, 15);
 
 const float pi = 3.14159265358979;
 
@@ -59,11 +62,11 @@ void runFeedback(const std::vector<float> &data, feedbackFunction f) {
 
   f(data, red, green, blue, motor);
 
-  for(int i=0; i<5; i++) {
+  for(int i=0; i<numberOfPixels; i++) {
     pixels.setPixelColor(i, pixels.Color(red, green, blue));
   }
-  
-  for(int i=0; i<3; i++) {
+
+  for(int i=0; i<numberOfMotors; i++) {
     motors.setPixelColor(i, motors.Color(motor, motor, motor));
   }
 
