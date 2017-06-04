@@ -26,7 +26,7 @@ public:
     sensors_event_t event; 
     bno.getEvent(&event);
 
-    // print out accelleration data
+    // print out orientation data
     values[0] = event.orientation.x;
     values[1] = event.orientation.y;
     values[2] = event.orientation.z;    
