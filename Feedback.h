@@ -22,9 +22,9 @@ float mapAndConstrain(float value, float fromLow, float fromHigh, float toLow, f
 typedef void (*feedbackFunction) (const std::vector<float> &data, float &red, float &green, float &blue, float &motor);
 
 void feedbackNineDof(const std::vector<float> &data, float &red, float &green, float &blue, float &motor) {
-  red = data[6];
-  green = data[7];
-  blue = data[8];
+  red = mapAndConstrain(data[0], -10, 10, 0, 255);
+  green = mapAndConstrain(data[1], -10, 10, 0, 255);
+  blue = mapAndConstrain(data[2], -10, 10, 0, 255);
 
   motor = data[0];
 }
