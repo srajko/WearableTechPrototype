@@ -1,4 +1,5 @@
 #include <Adafruit_NeoPixel.h>
+#include "NeoPixelFeedback.h"
 
 const int numberOfPixels = 24;
 const int numberOfMotors = 3;
@@ -62,9 +63,7 @@ void runFeedback(const std::vector<float> &data, feedbackFunction f) {
 
   f(data, red, green, blue, motor);
 
-  for(int i=0; i<numberOfPixels; i++) {
-    pixels.setPixelColor(i, pixels.Color(red, green, blue));
-  }
+  neoPixelFeedback(numberOfPixels, pixels, pixels.Color(red, green, blue));
 
   for(int i=0; i<numberOfMotors; i++) {
     motors.setPixelColor(i, motors.Color(motor, motor, motor));
