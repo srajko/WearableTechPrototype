@@ -40,7 +40,7 @@ void setup() {
 
   WiFiSetup();
   if (feedbackEnabled) {
-    feedbackSetup();    
+    feedbackSetup();
   }
 
   sensors[0] = new NineDofSensor();
@@ -51,6 +51,8 @@ void setup() {
 
   for(int sensorIndex=0; sensorIndex<sensorCount; sensorIndex++) {
     if(sensors[sensorIndex]->Initialized()) {
+      Serial.print("Using sensor type ");
+      Serial.println(sensorIndex);
       sensor = sensors[sensorIndex];
       message = sensor->Message();
       feedback = feedbacks[sensorIndex];
